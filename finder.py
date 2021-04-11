@@ -32,7 +32,7 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
                     if search_pdf_file(search_path + "\\" + file, keywords):
                         result.append(search_path + "\\" + file)
                         print("saved pdf file path")
-                except (ValueError, PyPDF2.utils.PdfStreamError):
+                except (ValueError, PyPDF2.utils.PdfStreamError, OSError):
                     print("error with pdf file")
                     error_files.append(search_path + "\\" + file)
                     print("saved error pdf file path")
