@@ -47,6 +47,7 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
 
     # --------------------- save result in output folder ------------------------------------------
     if first:
+        print("start saving to output")
         couldnt_be_written_counter = 0
         save_file_path = output_path + "\\" + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + "-" + "result.txt"
         with open(save_file_path, "w") as output_file:
