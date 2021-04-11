@@ -1,5 +1,6 @@
 import os
 import PyPDF2
+import docx2txt
 import datetime
 import time
 
@@ -30,7 +31,8 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
                 if search_pdf_file(search_path + "\\" + file, keywords):
                     result.append(search_path + "\\" + file)
             elif file.endswith(".docx"):
-                print("found docx")
+                if search_word_file(search_path + "\\" + file, keywords):
+                    result.append(search_path + "\\" + file)
             
 
     # --------------------- save result in output folder ------------------------------------------
@@ -86,4 +88,9 @@ def search_pdf_file(file: str, keywords: list) -> bool:
 
 
 def search_word_file(file: str, keywords: list) -> bool:
-    pass
+    print(f"searching in {file}")
+    text = docx2txt.process(file)
+    for word in text.split():
+        if word.lower()in keywords:
+            return True
+    return False
