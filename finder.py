@@ -98,6 +98,15 @@ def search_pdf_file(file: str, keywords: list) -> bool:
                 if word.lower() in keywords:
                     print("found pdf with the given keywords")
                     return True
+                elif word[:-1].lower() in keywords:
+                    print("found pdf with the given keywords")
+                    return True
+                elif word[1:].lower() in keywords:
+                    print("found pdf with the given keywords")
+                    return True
+                elif word[1:-1].lower() in keywords:
+                    print("found pdf with the given keywords")
+                    return True
     print(f"keywords not in {file}")
     return False
 
@@ -106,7 +115,16 @@ def search_word_file(file: str, keywords: list) -> bool:
     print(f"searching in {file}")
     text = docx2txt.process(file)
     for word in text.split():
-        if word.lower()in keywords:
+        if word.lower() in keywords:
+            print("found docx with the given keywords")
+            return True
+        elif word[:-1].lower() in keywords:
+            print("found docx with the given keywords")
+            return True
+        elif word[1:].lower() in keywords:
+            print("found docx with the given keywords")
+            return True
+        elif word[1:-1].lower() in keywords:
             print("found docx with the given keywords")
             return True
     print(f"keywords not in {file}")
