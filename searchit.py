@@ -1,4 +1,5 @@
 import json
+import time
 
 import finder
 
@@ -47,7 +48,7 @@ except (FileNotFoundError, KeyError, json.decoder.JSONDecodeError):
 
 # ---------------- search ----------------------------------------------------
 print("Starting finder")
-finder.search(input_path, output_path, keywords, True)
+finder.search(input_path, output_path, keywords, True, time.time())
 
 
 

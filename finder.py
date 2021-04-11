@@ -1,11 +1,12 @@
 import os
 import PyPDF2
 import datetime
+import time
 
 result = list()
 
 
-def search(search_path: str, output_path: str, keywords: list, first: bool):
+def search(search_path: str, output_path: str, keywords: list, first: bool, start_time = 0):
 
     # -------------------- change working directory -------------------------------------
     try:
@@ -40,8 +41,8 @@ def search(search_path: str, output_path: str, keywords: list, first: bool):
             output_file.write("Found: \n")
             for path in result:
                 output_file.write(path + "\n")
+            print(f"\n\nDone [{round(time.time() - start_time)} seconds]")
             print(f"Saved result in {save_file_path}")
-
 
 def binary_to_string(binary):
     binary = str(binary)
@@ -62,7 +63,7 @@ def binary_to_string_sentence(binary):
 
 
 def search_pdf_file(file: str, keywords: list) -> bool:
-    print(f"Searching in {file}")
+    print(f"searching in {file}")
     # ------------ extracting text from pdf ------------------------------------------
     with open(file, "rb") as pdfFile:
         pdfReader = PyPDF2.PdfFileReader(pdfFile)
