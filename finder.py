@@ -5,7 +5,7 @@ import datetime
 import time
 
 result = list()
-
+error_files = list()
 
 def search(search_path: str, output_path: str, keywords: list, first: bool, start_time = 0):
 
@@ -28,8 +28,11 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
             print(f"changed working directory to {search_path}")
         elif os.path.isfile(file):
             if file.endswith(".pdf"):
-                if search_pdf_file(search_path + "\\" + file, keywords):
-                    result.append(search_path + "\\" + file)
+                try:
+                    if search_pdf_file(search_path + "\\" + file, keywords):
+                        result.append(search_path + "\\" + file)
+                except ValueError:
+                    error_files.append(search_path + "\\" + file)
             elif file.endswith(".docx"):
                 if search_word_file(search_path + "\\" + file, keywords):
                     result.append(search_path + "\\" + file)
@@ -39,10 +42,14 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
     if first:
         save_file_path = output_path + "\\" + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + "-" + "result.txt"
         with open(save_file_path, "w") as output_file:
-            output_file.write(f"used keywords: {keywords}\n\n")
+            output_file.write(f"used keywords: {keywords}\n")
+            output_file.write(f"Found [{len(result)}] || Error [{len(error_files)}] \n\n")
             output_file.write("Found: \n")
             for path in result:
                 output_file.write(path + "\n")
+            output_file.write("\nError: \n")
+            for error_file_path in error_files:
+                output_file.write(error_file_path + "\n")
             print(f"\n\nDone [{round(time.time() - start_time)} seconds]")
             print(f"Saved result in {save_file_path}")
 
@@ -50,8 +57,10 @@ def binary_to_string(binary):
     binary = str(binary)
     values = binary.split()
     string = ""
-    for value in values:
+    for value in values:       
+        
         integ = int(value)
+        
         char = chr(integ)
         string += char
     return string
