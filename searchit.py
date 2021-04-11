@@ -49,7 +49,7 @@ except (FileNotFoundError, KeyError, json.decoder.JSONDecodeError):
 
 # ---------------- search ----------------------------------------------------
 print("Starting finder")
-finder.search(input_path, output_path, keywords)
+finder.search(input_path, output_path, keywords, True)
 
 
 
