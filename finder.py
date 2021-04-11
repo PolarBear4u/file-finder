@@ -47,6 +47,7 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
 
     # --------------------- save result in output folder ------------------------------------------
     if first:
+        couldnt_be_written_counter = 0
         save_file_path = output_path + "\\" + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + "-" + "result.txt"
         with open(save_file_path, "w") as output_file:
             output_file.write(f"searched in: {search_path}\n")
@@ -54,10 +55,25 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
             output_file.write(f"Found [{len(result)}] || Error [{len(error_files)}] \n\n")
             output_file.write("Found: \n")
             for path in result:
-                output_file.write(path + "\n")
+                try:
+                    output_file.write(path + "\n")
+                    print(f"saved {path} to {save_file_path}")
+                except KeyboardInterrupt:
+                    sys.exit()
+                except:
+                    couldnt_be_written_counter += 1
+                    print(f"error while writing to {save_file_path}")
             output_file.write("\nError: \n")
             for error_file_path in error_files:
-                output_file.write(error_file_path + "\n")
+                try:
+                    output_file.write(error_file_path + "\n")
+                    print(f"saved {error_file_path} to {save_file_path}")
+                except KeyboardInterrupt:
+                    sys.exit()
+                except:
+                    couldnt_be_written_counter += 1
+                    print(f"error while writing to {save_file_path}")
+            output_file.write(f"\n\nErrors while writing to output file: [{couldnt_be_written_counter}]")
             print(f"\n\ndone [{round(time.time() - start_time)} seconds]")
             print(f"saved result in {save_file_path}")
 
