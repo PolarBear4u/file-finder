@@ -46,6 +46,7 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
     if first:
         save_file_path = output_path + "\\" + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + "-" + "result.txt"
         with open(save_file_path, "w") as output_file:
+            output_file.write(f"searched in: {search_path}\n")
             output_file.write(f"used keywords: {keywords}\n")
             output_file.write(f"Found [{len(result)}] || Error [{len(error_files)}] \n\n")
             output_file.write("Found: \n")
