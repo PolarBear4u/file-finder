@@ -1,6 +1,4 @@
-import json
 import os
-import sys
 import PyPDF2
 import datetime
 
@@ -21,21 +19,25 @@ def search(search_path: str, output_path: str, keywords: list, first: bool):
         return
 
     # ----------------------- loop through directory and subdirectories -----------------------------------
-    print(os.listdir(search_path))
     for file in os.listdir(search_path):
         if os.path.isdir(file):
             search(search_path + "\\" + file, output_path, keywords, False)
             os.chdir(search_path)
+            print(f"changed working directory to {search_path}")
         elif os.path.isfile(file):
             if file.endswith(".pdf"):
                 if search_pdf_file(search_path + "\\" + file, keywords):
                     result.append(search_path + "\\" + file)
+            elif file.endswith(".docx"):
+                print("found docx")
             
 
     # --------------------- save result in output folder ------------------------------------------
     if first:
         save_file_path = output_path + "\\" + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + "-" + "result.txt"
         with open(save_file_path, "w") as output_file:
+            output_file.write(f"used keywords: {keywords}\n\n")
+            output_file.write("Found: \n")
             for path in result:
                 output_file.write(path + "\n")
             print(f"Saved result in {save_file_path}")
@@ -77,7 +79,7 @@ def search_pdf_file(file: str, keywords: list) -> bool:
             text = binary_to_string_sentence(text)
             # -------------------- search ------------------------------------------
             for word in text.split():
-                if word in keywords:
+                if word.lower() in keywords:
                     return True
     return False
 

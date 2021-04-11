@@ -1,5 +1,3 @@
-import os
-import sys
 import json
 
 import finder
@@ -27,7 +25,7 @@ try:
         if want_change_output == "y":
             output_path = input("Enter output path: ")     
         if want_change_keywords == "y":
-            keywords = input("Enter your keywords: ").split()
+            keywords = input("Enter your keywords: ").lower().split()
 
     with open("settings.json", "w") as file:
         settings["input"] = input_path
@@ -40,7 +38,7 @@ except (FileNotFoundError, KeyError, json.decoder.JSONDecodeError):
     with open("settings.json", "w") as file:
         input_path = input("Enter input path: ")
         output_path = input("Enter output path: ")
-        keywords = input("Enter keywords: ").split()
+        keywords = input("Enter keywords: ").lower().split()
         settings["input"] = input_path
         settings["output"] = output_path
         settings["keywords"] = keywords
