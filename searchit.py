@@ -33,7 +33,7 @@ try:
         settings["output"] = output_path
         settings["keywords"] = keywords
         json.dump(settings, file)  
-        print("Saved")
+        print("saved")
 
 except (FileNotFoundError, KeyError, json.decoder.JSONDecodeError):
     with open("settings.json", "w") as file:
@@ -47,7 +47,7 @@ except (FileNotFoundError, KeyError, json.decoder.JSONDecodeError):
         print("Saved")
 
 # ---------------- search ----------------------------------------------------
-print("Starting finder")
+print("starting finder")
 finder.search(input_path, output_path, keywords, True, time.time())
 
 

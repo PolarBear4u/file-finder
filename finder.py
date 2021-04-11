@@ -31,11 +31,15 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
                 try:
                     if search_pdf_file(search_path + "\\" + file, keywords):
                         result.append(search_path + "\\" + file)
+                        print("saved pdf file path")
                 except ValueError:
+                    print("error with pdf file")
                     error_files.append(search_path + "\\" + file)
+                    print("saved error pdf file path")
             elif file.endswith(".docx"):
                 if search_word_file(search_path + "\\" + file, keywords):
                     result.append(search_path + "\\" + file)
+                    print("saved docx file path")
             
 
     # --------------------- save result in output folder ------------------------------------------
@@ -50,8 +54,8 @@ def search(search_path: str, output_path: str, keywords: list, first: bool, star
             output_file.write("\nError: \n")
             for error_file_path in error_files:
                 output_file.write(error_file_path + "\n")
-            print(f"\n\nDone [{round(time.time() - start_time)} seconds]")
-            print(f"Saved result in {save_file_path}")
+            print(f"\n\ndone [{round(time.time() - start_time)} seconds]")
+            print(f"saved result in {save_file_path}")
 
 def binary_to_string(binary):
     binary = str(binary)
@@ -92,7 +96,9 @@ def search_pdf_file(file: str, keywords: list) -> bool:
             # -------------------- search ------------------------------------------
             for word in text.split():
                 if word.lower() in keywords:
+                    print("found pdf with the given keywords")
                     return True
+    print(f"keywords not in {file}")
     return False
 
 
@@ -101,5 +107,7 @@ def search_word_file(file: str, keywords: list) -> bool:
     text = docx2txt.process(file)
     for word in text.split():
         if word.lower()in keywords:
+            print("found docx with the given keywords")
             return True
+    print(f"keywords not in {file}")
     return False
